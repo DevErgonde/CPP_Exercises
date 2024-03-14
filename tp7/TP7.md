@@ -20,7 +20,7 @@ public:
     virtual void move() { std::cout << "Moving!" << std::endl; }
 
     void type() const { std::cout << "Animal" << std::endl; }
-};
+}; 
 
 class Carnivore
 {
@@ -56,32 +56,32 @@ public:
 
 int main()
 {
-    Tiger tiger;
-    Animal& tiger_as_animal = tiger;
-    Carnivore& tiger_as_carn = tiger;
+    Tiger tiger; // Type statique : Tiger | Type dynamique : Tiger
+    Animal& tiger_as_animal = tiger; // Type statique : Animal | Type dynamique : Tiger
+    Carnivore& tiger_as_carn = tiger; // Type statique : Carnivore | Type dynamique : Tiger
 
-    Bird bird;
-    Animal& bird_as_animal = bird;
-    Herbivore& bird_as_herb = bird;
-    Carnivore& bird_as_carn = bird;
+    Bird bird; // Type statique : Bird | Type dynamique : Bird
+    Animal& bird_as_animal = bird; // Type statique : Animal | Type dynamique : Bird
+    Herbivore& bird_as_herb = bird; // Type statique : Herbivore | Type dynamique : Bird
+    Carnivore& bird_as_carn = bird; // Type statique : Carnivore | Type dynamique : Bird
 
-    tiger.move();                  // I1
-    tiger_as_animal.move();        // I2
+    tiger.move();                  // Tiger::move 
+    tiger_as_animal.move();        // Tiger::move 
 
-    bird.move();                   // I3
-    bird_as_animal.move();         // I4
+    bird.move();                   // Bird::move
+    bird_as_animal.move();         // Bird::move
 
-    bird.can_eat_plant();          // I5
-    bird_as_herb.can_eat_plant();  // I6
-    bird_as_carn.can_eat_plant();  // I7
+    bird.can_eat_plant();          // Bird::can_eat_plant
+    bird_as_herb.can_eat_plant();  // Bird::can_eat_plant
+    bird_as_carn.can_eat_plant();  // Carnivore::can_eat_plant
 
-    tiger.can_eat_plant();         // I8
-    tiger.can_eat_meat();          // I9
-    tiger_as_carn.can_eat_meat();  // I10
+    tiger.can_eat_plant();         // Animal::can_eat_plant (ne trouve pas dans Tiger donc cherche dans Animal)
+    tiger.can_eat_meat();          // Tiger::can_eat_meat
+    tiger_as_carn.can_eat_meat();  // Carnivore::can_eat_meat
 
-    bird.type();                   // I11
-    bird_as_animal.type();         // I12
-    tiger_as_animal.type();        // I13
+    bird.type();                   // Bird::type
+    bird_as_animal.type();         // Animal::type
+    tiger_as_animal.type();        // Animal::type
 
     return 0;
 }
@@ -111,8 +111,16 @@ cmake --build <chemin_vers_le_dossier_build> --target tp6-ex1
 
 2. Prenez connaissance du contenu des fichiers pré-existants et répondez aux questions suivantes :
 - Dans [Dungeon.cpp](dungeon/Dungeon.cpp), quel est le rôle de la fonction `display` ?
+
+<span style="color:cyan"> Son rôle est d'ajouter dans le flux de sortie l'affichage d'une frame de la simulation. </span>
+
 - Dans [Dungeon.cpp](dungeon/Dungeon.cpp), quel est le rôle de la fonction `update` ?
+
+<span style="color:cyan"> Son rôle est de mettre à jour la simulation (grille et personnages)</span>
+
 - Quelle variable du `main` porte l'ownership des entitées ?
+
+<span style="color:cyan"> C'est la variable all_entities.</span>
 
 ### B. Personnage
 
